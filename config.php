@@ -20,7 +20,7 @@
             if(!isset($_COOKIE['PHPSESSID'])){session_start();}
             $user=$_POST['username'];
             $pwd = $_POST['password'];
-            $pwd = password_hash($pwd, PASSWORD_DEFAULT);
+            // $pwd = password_hash($pwd, PASSWORD_DEFAULT);
             $result=exec_query("select customer_id as id, customer_address as ca, customer_phone_no as cpn, customer_email as ce, customer_name as cn, password as pd from customer where username='$user';");
             if($result->num_rows==1){
                 while($row=mysqli_fetch_assoc($result)){
@@ -31,7 +31,7 @@
                     $ce=$row['ce'];
                     $ca=$row['ca'];
                     if(DEBUG){console_info('Username Found!');}
-                    if(password_verify($pd, $pwd)){
+                    if(password_verify($pwd, $pd)){
                         $_SESSION['id']=$id;
                         $_SESSION['name']=$cn;
                         $_SESSION['username']=$user;
