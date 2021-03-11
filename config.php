@@ -14,7 +14,7 @@
     function alert($m){echo "<script>alert('$m');</script>";}
     function redirect(string $redirect_non_signed_in_page, string $redirect_customer_page, string $redirect_admin_page, string $redirect_trainer_page){if(!isset($_COOKIE['PHPSESSID'])){session_start();}if($_SESSION==null){header("Location: $redirect_non_signed_in_page");}else{if($_SESSION['user_type']=='customer'){header("Location: $redirect_customer_page");}else if($_SESSION['user_type']=='admin'){header("Location: $redirect_admin_page");}else if($_SESSION['user_type']=='trainer'){header("Location: $redirect_trainer_page");}else{session_unset();header("Location: $redirect_index_page");}}}
     function exec_query(string $sql, string $host='localhost', string $username='root', string $password='', string $db='club_management_system'){$con=new mysqli($host,$username,$password,$db);$result=mysqli_query($con,$sql);$con->close();return $result;}
-    function logout(){if(isset($_GET['action'])){if($_GET['action'] == 'logout'){session_start();session_unset();if(DEBUG){console_info('Logged Out Successfully!');}}}}
+    function logout(){if(isset($_GET['action'])){if($_GET['action'] == 'logout'){session_start();session_unset();redirect('./index.php', '', '../admin/index.php', '../trainer/index.php');if(DEBUG){console_info('Logged Out Successfully!');}}}}
     function customer_signin(){
         if(isset($_POST['username']) && isset($_POST['password'])){
             if(!isset($_COOKIE['PHPSESSID'])){session_start();}
